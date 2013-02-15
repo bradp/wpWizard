@@ -13,13 +13,13 @@
 
 clear
 echo ""
-echo "                 Welcome to Aaron Holbrook's WPBuildr!                  "
+echo "                 Welcome to Brad Parbs's wpbuildr!                  "
 echo '  _ _ _           _ _____                    _____     _ _   _          '
 echo ' | | | |___ ___ _| |  _  |___ ___ ___ ___   | __  |_ _|_| |_| | ___     '
 echo ' | | | | . |  _| . |   __|  _| -_|_ -|_ -|  | __ -| | | | | . ||  _|    '
 echo ' |_____|___|_| |___|__|  |_| |___|___|___|  |_____|___|_|_|___||_|      '
 echo '                                                                        '
-echo '          @aaronjholbrook | http://a7web.com | aaron@a7web.com          '
+echo "          Forked from Aaron Holbrook's wpbuildr!				          "
 echo '------------------------------------------------------------------------'
 echo " "
 
@@ -82,9 +82,7 @@ git commit --allow-empty -q -m "Initial empty commit"
 
 
 echo ''
-echo '------------------------------------------------------------------------'
-echo '---> DOWNLOADING WORDPRESS'
-echo '------------------------------------------------------------------------'
+echo "Downloading WordPress for you."
 echo ''
 
 
@@ -94,19 +92,20 @@ cat "$dir/lib/.gitignore" > .gitignore
 
 
 # download wordpress, extract and delete original tar
-curl -H "Accept-Encoding: gzip,deflate" http://wordpress.org/latest.tar.gz > latest.tar.gz
+#curl -H "Accept-Encoding: gzip,deflate" http://wordpress.org/latest.tar.gz > latest.tar.gz
 wget http://wordpress.org/latest.tar.gz
 tar --strip-components=1 -zxf latest.tar.gz
 rm latest.tar.gz
-rm latest.tar.gz.1
+git add .
+git commit -q -m "Installed WordPress core files."
 rm license.txt
 rm readme.html
+git add .
+git commit -q -a -s -m "Removed License"
 
 
 echo ''
-echo '------------------------------------------------------------------------'
-echo '---> WORDPRESS DOWNLOADED'
-echo '------------------------------------------------------------------------'
+echo 'WordPress had been downloaded'
 echo ''
 
 
@@ -138,10 +137,8 @@ elif [ "$framework" == "custom" ]; then
 fi
 
 
-	
-echo '------------------------------------------------------------------------'
-echo '---> DOWNLOADING THEME'
-echo '------------------------------------------------------------------------'
+echo ''	
+echo "Downloading theme for you."
 echo ''
 
 
@@ -153,16 +150,22 @@ if [ "$framework_repo" != "none" ]; then
 	# delete the git repo that the theme came with
 	rm -rf wp-content/themes/$project/.git
 
+	git add .
+	git commit -q -a -s -m "Installed theme framework"
+
+
 	# let's clear out some of the pre-packaged themes
 	rm -rf wp-content/themes/twentyten
 	rm -rf wp-content/themes/twentyeleven
 	rm -rf wp-content/themes/twentytwelve
+
+	git add .
+	git commit -q -a -s -m "Removed default themes"
+
 fi
 
 
-echo '------------------------------------------------------------------------'
-echo '---> THEME INSTALLED'
-echo '------------------------------------------------------------------------'
+echo 'Theme framework has been installed'
 echo ''
 
 
@@ -175,6 +178,8 @@ cd wp-content/plugins
 rm -rf akismet
 rm hello.php
 
+git add .
+git commit -q -a -s -m "Removed Hello-Dolly and Hello.php plugins"
 
 # Install plugins that are listed in the plugins.conf file
 # To add your/modify the plugins that are installed simply
@@ -182,22 +187,22 @@ rm hello.php
 for plugin in `cat $dir/conf/plugins.conf`; do
 	echo "Installing: $plugin..."
 	mkdir $plugin; cd $plugin
-	curl -H "Accept-Encoding: gzip,deflate" http://downloads.wordpress.org/plugin/$plugin.zip > $plugin.zip
+	wget -q http://downloads.wordpress.org/plugin/$plugin.zip
 	tar --strip-components=1 -zxf $plugin.zip
 	rm $plugin.zip
+	git add .
+	git commit -q -a -s -m "Installed $plugin"
 	cd ..
 done
 
 
 # cool, plugins are installed, let's commit!
 git add .
-git commit -q -m "Plugins installed!"
+git commit -q -m "All plugins installed"
 
 
 echo ''
-echo '------------------------------------------------------------------------'
-echo '---> PLUGINS INSTALLED'
-echo '------------------------------------------------------------------------'
+echo "Plugins installed, and I've done a commit."
 echo ''
 
 
@@ -307,7 +312,8 @@ require_once(ABSPATH . 'wp-settings.php');" >> wp-config.php
 
 # All done with wp-config.php so let's remove that wp-config-sample.php file
 rm wp-config-sample.php
-
+git add .
+git commit -q -a -s -m "Removed Sample WP-Config file"
 
 # define wp-config.local
 echo "<?php
@@ -334,36 +340,19 @@ git add .
 git commit -q -am "Created wp-config & wp-config.local."
 
 
-echo '------------------------------------------------------------------------'
-echo '---> WP-CONFIG & WP-CONFIG.LOCAL CREATED'
-echo '------------------------------------------------------------------------'
+echo 'Created wp-config and wp-config.local'
 echo ''
 
 # create local database
 /Applications/MAMP/Library/bin/mysql -uroot -proot -e "CREATE DATABASE $project"
 
 echo ''
-echo '------------------------------------------------------------------------'
-echo '---> DATABASE CREATED'
-echo '------------------------------------------------------------------------'
+echo 'Database has been created'
 echo ''
-
-
-echo '-------------------------------------------------------------------------------------'
-echo '                     _                                                             __'
-echo '   __  ______  __  _( )________     ____ __      _____  _________  ____ ___  ___  / /'
-echo '  / / / / __ \/ / / /// ___/ _ \   / __ `/ | /| / / _ \/ ___/ __ \/ __ `__ \/ _ \/ / '
-echo ' / /_/ / /_/ / /_/ / / /  /  __/  / /_/ /| |/ |/ /  __(__  ) /_/ / / / / / /  __/_/  '
-echo ' \__, /\____/\__,_/ /_/   \___/   \__,_/ |__/|__/\___/____/\____/_/ /_/ /_/\___(_)   '
-echo '/____/                                                                               '
-echo ''
-echo "If you found this useful I'd love to know! Hit me up at @aaronjholbrook"
-echo "You're all done, now go drink a beer!"
-
 
 echo ''
 echo '------------------------------------------------------------------------'
-echo '---> WPBUILDR COMPLETE'
+echo 'wpBuildr has completed all the tasks.'
 echo '------------------------------------------------------------------------'
 echo ''
 
