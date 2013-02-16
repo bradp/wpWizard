@@ -255,6 +255,13 @@ else {
 
 	define('SAVEQUERIES', true);
 
+	//Disallow edition of files throught WP editor
+	define('DISALLOW_FILE_EDIT', true); 
+
+	//Disallow install of upgrades
+	define('DISALLOW_FILE_MODS',true); 
+
+
 	/**
 	 * WordPress Database Table prefix.
 	 *
@@ -329,6 +336,13 @@ define('WP_DEBUG', true);
 
 // Save queries
 define('SAVEQUERIES', true);
+
+//Disallow edition of files throught WP editor
+define('DISALLOW_FILE_EDIT', true); 
+
+//Disallow install of upgrades
+define('DISALLOW_FILE_MODS',true); 
+
 
 \$table_prefix  = 'wp_"$project"_'; 
 ?>" > wp-config.local.php
