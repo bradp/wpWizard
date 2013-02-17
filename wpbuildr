@@ -19,14 +19,16 @@ echo ' | | | |___ ___ _| |  _  |___ ___ ___ ___   | __  |_ _|_| |_| | ___     '
 echo ' | | | | . |  _| . |   __|  _| -_|_ -|_ -|  | __ -| | | | | . ||  _|    '
 echo ' |_____|___|_| |___|__|  |_| |___|___|___|  |_____|___|_|_|___||_|      '
 echo '                                                                        '
-echo "          Forked from Aaron Holbrook's wpbuildr!				          "
+echo "          	Forked from Aaron Holbrook's wpbuildr!				      "
 echo '------------------------------------------------------------------------'
 echo " "
+
+USECURL=$(command -v wget);
 
 # create the html for site-root (to mimic MT, possibly look at allowing other structures)
 # if html dir exists, exit - let's not break anything!
 if [ -d "html" ]; then
-	echo "Oops, looks like you already have an html directory here! To protect your files, WP Buildr will now quit. If you meant to run it here, just rename/remove your existing html folder, and it will run."  	
+	echo "Oops, looks like you already have an html directory here! To protect your files, wpbuildr will now quit. If you meant to run it here, just rename/remove your existing html folder, and it will run."  	
 	echo "exiting..."  	
 	exit
 fi
@@ -42,7 +44,7 @@ dir=`dirname $0`
 # theme name
 # table prefixes
 if [ ! $1 ]; then
-	read -p "Give your project a name: " project
+	read -p "Give your project a name (this will be used in database creation and theme folder creation): " project
 else
 	project=$1
 fi
@@ -92,7 +94,13 @@ cat "$dir/lib/.gitignore" > .gitignore
 
 
 # download wordpress, extract and delete original tar
-wget http://wordpress.org/latest.tar.gz
+if [ -z $USECURL ]; then
+	curl -H "Accept-Encoding: gzip,deflate" http://wordpress.org/latest.tar.gz > latest.tar.gz
+else
+	wget http://wordpress.org/latest.tar.gz
+fi
+
+
 tar --strip-components=1 -zxf latest.tar.gz
 rm latest.tar.gz
 git add .
@@ -200,7 +208,12 @@ git commit -q -a -s -m "Removed Hello-Dolly and Hello.php plugins"
 for plugin in `cat $dir/conf/plugins.conf`; do
 	echo "Installing: $plugin..."
 	mkdir $plugin; cd $plugin
-	wget -q http://downloads.wordpress.org/plugin/$plugin.zip
+	if [ -z $USECURL ]; then
+		curl -H "Accept-Encoding: gzip,deflate" http://downloads.wordpress.org/plugin/$plugin.zip > $plugin.zip
+	else
+		wget -q http://downloads.wordpress.org/plugin/$plugin.zip
+	fi
+	
 	tar --strip-components=1 -zxf $plugin.zip
 	rm $plugin.zip
 	git add .
