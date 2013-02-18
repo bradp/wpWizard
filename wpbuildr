@@ -403,8 +403,6 @@ echo ''
 
 echo ''
 echo '------------------------------------------------------------------------'
-echo 'wpBuildr has completed all the tasks.'
+echo '	wpBuildr has completed all the tasks.'
 echo '------------------------------------------------------------------------'
 echo ''
-
-
