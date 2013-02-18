@@ -14,9 +14,9 @@ What it automates
 
 * Downloads and extracts WordPress
 * Configures DB information
-* Installs or copies your starter theme or framework
-* Removes the Hello, Dolly plugin
-* Downloads or installs your favorite development plugins
+* Installs or copies your starter theme or framework. Currently includes [Blue Ox](http://github.com/AaronHolbrook/Blue-Ox.git), [_s](http://github.com/Automattic/_s.git), [Starkers](http://github.com/viewportindustries/starkers.git), [BootstrapWP](http://github.com/rachelbaker/bootstrapwp-Twitter-Bootstrap-for-WordPress.git), [HTML5](http://github.com/murtaugh/HTML5-Reset-Wordpress-Theme.git), [StartBox](http://github.com/brichards/StartBox.git), [Bones](http://github.com/eddiemachado/bones.git), [Roots](http://github.com/retlehs/roots.git), [Reverie](http://github.com/milohuang/reverie.git), [Required](http://github.com/wearerequired/required-foundation.git), [Thematic](http://github.com/ThematicTheme/Thematic.git), [Skeleton](http://github.com/simplethemes/skeleton_wp.git), [WP-Talon](http@github.com:dustyf/wp-talon.git), or any local or remote Git repository.
+* Removes the Hello, Dolly! plugin
+* Downloads or installs your favorite plugins
 * Sets up a git repository, with commits during all stages of installation
 
 
@@ -24,7 +24,7 @@ Requirements
 ===========
 
 * Mac OS X >= 10.5
-* MAMP
+* MAMP or MAMP Pro
 * `Bash` >= 3.2
 
 Running
@@ -34,9 +34,11 @@ Place the folder within your Bash path (`/usr/local/sbin/`, `/usr/local/`) or ad
 
 Via the command line, navigate to your desired placement of your new WordPress install, simply run `wpbuildr`. 
 
-`wpbuildr` accepts one argument at the command line, which is the intended name of your project. This argument is used to create the database name, theme folder and the table prefix.
+`wpbuildr` optionally accepts one or two arguments on the command line, which is the intended name of your project. This argument is used to create the database name, theme folder and the table prefix. The second is the name of the framework. 
 
 Example usage: `$ wpbuildr mywwpinstall` would create a database and theme folder named 'mywpinstall'
+
+Advanced usage: You can feed the framework name in as well so `$ wpbuildr mywwpinstall skeleton` would create a database and theme folder named 'mywpinstall', using Skeleton as a framework.
 
 Enjoy your new WordPress install!
 
