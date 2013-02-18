@@ -217,22 +217,50 @@ for plugin in `cat $dir/conf/plugins.conf`; do
 	tar --strip-components=1 -zxf $plugin.zip
 	rm $plugin.zip
 	git add .
-	git commit -q -a -s -m "Installed $plugin"
+	git commit --allow-empty -q -a -s -m "Installed $plugin"
 	cd ..
 done
 
+# Let's add some mu-plugins! props @aaronjholbrook
+cd ..
+mkdir mu-plugins
+cd mu-plugins
+echo "<?php // mu-plugins/load.php" > load.php;
+
+# Install plugins that are listed in the mu-plugins.conf file
+# To add your/modify the plugins that are installed simply
+# Change the plugins file to contain the slug of the plugins you want! 
+for plugin in `cat $dir/conf/mu-plugins.conf`; do
+	echo "Installing: $plugin..."
+	mkdir $plugin; cd $plugin
+	if [ -z $USECURL ]; then
+		curl -H "Accept-Encoding: gzip,deflate" http://downloads.wordpress.org/plugin/$plugin.zip > $plugin.zip
+	else
+		wget -q http://downloads.wordpress.org/plugin/$plugin.zip
+	fi
+	tar --strip-components=1 -zxf $plugin.zip
+	rm $plugin.zip
+
+	# Create a loader for the plugin (mu-plugins does not look in subdirectories)
+	cd ..
+	echo "require WPMU_PLUGIN_DIR . '/$plugin/$plugin.php';" >> load.php
+
+	git add .
+	git commit --allow-empty -q -a -s -m "Installed $plugin"
+done
 
 # cool, plugins are installed, let's commit!
+
+cd ../../
+
 git add .
-git commit -q -m "All plugins installed"
+git commit --allow-empty -q -m "All plugins installed"
 
 
 echo ''
 echo "Plugins installed, and I've done a commit."
 echo ''
 
-
-cd ../../
 echo "<?php
 /**
  * The base configurations of the WordPress.
