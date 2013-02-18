@@ -33,10 +33,8 @@ if [ -d "html" ]; then
 	exit
 fi
 
-
 # Set path of script for our library files
 dir=`dirname $0`
-
 
 # Title the project
 # Use the title for:
@@ -48,7 +46,6 @@ if [ ! $1 ]; then
 else
 	project=$1
 fi
-
 
 # See if there's a config file, if not offer to create one based on the options the 
 # user chooses during the setup
@@ -73,25 +70,19 @@ if [ ! $2 ]; then
 	read -p "Options: [bones, bootstrap, blueox, html5, required, roots, _s, startbox, starkers, skeleton, talon, thematic, custom, none]: " framework
 fi
 
-
 # Create html directory (todo: customizable structure)
 mkdir html; cd html
-
 
 # Init git repo and do an empty initial commit (for rebasing, thanks @evansolomon)
 git init -q
 git commit --allow-empty -q -m "Initial empty commit"
 
-
 echo ''
 echo "Downloading WordPress for you."
 echo ''
 
-
-
 # set .gitignore to ignore wp-config.local so we can set different database variables for development vs production
 cat "$dir/lib/.gitignore" > .gitignore
-
 
 # download wordpress, extract and delete original tar
 if [ -z $USECURL ]; then
@@ -100,26 +91,18 @@ else
 	wget http://wordpress.org/latest.tar.gz
 fi
 
-
 tar --strip-components=1 -zxf latest.tar.gz
 rm latest.tar.gz
-git add .
-git commit -q -m "Installed WordPress core files."
 rm license.txt
 rm readme.html
-git add .
-git commit -q -a -s -m "Removed License"
-
 
 echo ''
 echo 'WordPress had been downloaded'
 echo ''
 
-
-
 # We succesfully added WordPress, so let's commit!
 git add .
-git commit -q -m "Installed WordPress core files."
+git commit --allow-empty -q -m "Installed WordPress core files."
 
 
 # Use framework option
@@ -172,7 +155,7 @@ if [ "$framework_repo" != "none" ]; then
 	rm -rf wp-content/themes/$project/.git
 
 	git add .
-	git commit -q -a -s -m "Installed theme framework"
+	git commit --allow-empty -q -a -s -m "Installed theme framework"
 
 
 	# let's clear out some of the pre-packaged themes
@@ -181,7 +164,7 @@ if [ "$framework_repo" != "none" ]; then
 	rm -rf wp-content/themes/twentytwelve
 
 	git add .
-	git commit -q -a -s -m "Removed default themes"
+	git commit --allow-empty -q -a -s -m "Removed default themes"
 
 fi
 
@@ -192,7 +175,7 @@ echo ''
 
 # Cool - we added our theme, let's commit!
 git add .
-git commit -q -m "Theme framework installed!"
+git commit --allow-empty -q -m "Theme framework installed!"
 
 # Clean out packaged plugins (akismet & hello dolly)
 cd wp-content/plugins
@@ -200,7 +183,7 @@ rm -rf akismet
 rm hello.php
 
 git add .
-git commit -q -a -s -m "Removed Hello-Dolly and Hello.php plugins"
+git commit --allow-empty -q -a -s -m "Removed Hello-Dolly and Hello.php plugins"
 
 # Install plugins that are listed in the plugins.conf file
 # To add your/modify the plugins that are installed simply
@@ -405,7 +388,7 @@ define('DISALLOW_FILE_MODS',true);
 
 # cool, wp-config(s) has been created, let's commit!
 git add .
-git commit -q -am "Created wp-config & wp-config.local."
+git commit --allow-empty -q -am "Created wp-config & wp-config.local."
 
 
 echo 'Created wp-config and wp-config.local'
