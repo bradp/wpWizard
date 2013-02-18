@@ -70,7 +70,7 @@ fi
 # Build our theme from a framework? 
 if [ ! $2 ]; then
 	echo "What theme framework would you like to use?"
-	read -p "Options: [bones, bootstrap, blueox, html5, roots, _s, startbox, starkers, skeleton, talon, thematic, custom, none]: " framework
+	read -p "Options: [bones, bootstrap, blueox, html5, required, roots, _s, startbox, starkers, skeleton, talon, thematic, custom, none]: " framework
 fi
 
 
@@ -146,7 +146,7 @@ elif [ "$framework" == "roots" ]; then
 elif [ "$framework" == "reverie" ]; then
 	framework_repo="git://github.com/milohuang/reverie.git"
 elif [ "$framework" == "required" ]; then
-	framework_repo="github.com/wearerequired/required-foundation.git"
+	framework_repo="git://github.com/wearerequired/required-foundation.git"
 elif [ "$framework" == "thematic" ]; then
 	framework_repo="git://github.com/ThematicTheme/Thematic.git"	
 elif [ "$framework" == "skeleton" ]; then
