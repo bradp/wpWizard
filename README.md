@@ -1,7 +1,9 @@
-WPBuildr
+wpWizard
 =================
 
-WPBuildr automates the set up a WordPress install complete with theme framework of your choice, a git repository with an empty initial commit (for easy rebasing), plugins of your choice, database creation and creation of wp-config file complete with unique RSA salts.
+*wpWizard has been renamed!*
+
+wpWizard automates the set up a WordPress install complete with theme framework of your choice, a git repository with an empty initial commit (for easy rebasing), plugins of your choice, database creation and creation of wp-config file complete with unique RSA salts.
 
 Who it's for
 ============
@@ -46,3 +48,8 @@ Customizing Plugins
 ===================
 
 Simply add or remove the slug of the plugins you want WPBuildr to install to the `conf/plugins.conf` file!
+
+Thanks!
+===================
+
+Thanks to [Aaron Holbrook](http://a7web.com) for originally writing wpbuildr - the project this was forked from. 
