@@ -34,20 +34,20 @@ Running
 
 Place the folder within your Bash path (`/usr/local/sbin/`, `/usr/local/`) or add it to your Bash profile path.
 
-Via the command line, navigate to your desired placement of your new WordPress install, simply run `wpbuildr`. 
+Via the command line, navigate to your desired placement of your new WordPress install, simply run `wpwizard`. 
 
-`wpbuildr` optionally accepts one or two arguments on the command line, which is the intended name of your project. This argument is used to create the database name, theme folder and the table prefix. The second is the name of the framework. 
+`wpwizard` optionally accepts one or two arguments on the command line, which is the intended name of your project. This argument is used to create the database name, theme folder and the table prefix. The second is the name of the framework. 
 
-Example usage: `$ wpbuildr mywwpinstall` would create a database and theme folder named 'mywpinstall'
+Example usage: `$ wpwizard mywwpinstall` would create a database and theme folder named 'mywpinstall'
 
-Advanced usage: You can feed the framework name in as well so `$ wpbuildr mywwpinstall skeleton` would create a database and theme folder named 'mywpinstall', using Skeleton as a framework.
+Advanced usage: You can feed the framework name in as well so `$ wpwizard mywwpinstall skeleton` would create a database and theme folder named 'mywpinstall', using Skeleton as a framework.
 
 Enjoy your new WordPress install!
 
 Customizing Plugins
 ===================
 
-Simply add or remove the slug of the plugins you want WPBuildr to install to the `conf/plugins.conf` file!
+Simply add or remove the slug of the plugins you want wpWizard to install to the `conf/plugins.conf` file!
 
 Thanks!
 ===================
