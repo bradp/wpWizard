@@ -29,10 +29,18 @@ Requirements
 * MAMP or MAMP Pro
 * `Bash` >= 3.2
 
+
+
+Installation
+=======
+Simply run `brew tap bradp/wpwizard` and then `brew install wpwizard`.
+
+**If you don't have homebrew installed:** Place the folder within your Bash path (`/usr/local/sbin/`, `/usr/local/`) or add it to your Bash profile path.
+
+
+
 Running
 =======
-
-Place the folder within your Bash path (`/usr/local/sbin/`, `/usr/local/`) or add it to your Bash profile path.
 
 Via the command line, navigate to your desired placement of your new WordPress install, simply run `wpwizard`. 
 
