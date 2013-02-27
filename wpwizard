@@ -72,7 +72,7 @@ fi
 # Build our theme from a framework? 
 if [ ! $2 ]; then
 	echo "What theme framework would you like to use?"
-	read -p "Options: [bones, bootstrap, blueox, html5, required, roots, _s, startbox, starkers, skeleton, talon, thematic, custom, none]: " framework
+	read -p "Options: [bones, bootstrap, blueox, html5, required, roots, _s, startbox, starkers, skeleton, talon, thematic, prometheus, custom, none]: " framework
 fi
 
 # Create html directory (todo: customizable structure)
@@ -141,6 +141,8 @@ elif [ "$framework" == "skeleton" ]; then
 	framework_repo="git://github.com/simplethemes/skeleton_wp.git"			
 elif [ "$framework" == "talon" ]; then
 	framework_repo="git@github.com:dustyf/wp-talon.git"	
+elif [ "$framework" == "prometheus" ]; then
+	framework_repo="git@github.com:noeltock/prometheus.git"	
 elif [ "$framework" == "custom" ]; then
   read -p "Location for custom theme: [can be git:// protocol or just a local git repository]: " framework_repo
 fi
