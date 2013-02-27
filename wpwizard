@@ -417,7 +417,7 @@ echo '   \_\_\.   / '
 echo '     )" |  ( '
 echo '  __/   H   \__ '
 echo '  \    /|\    / '
-echo '   `--'|||`--' '
+echo "   '--'|||'--'  "
 echo '      ==^== '
 echo ''
 echo '	wpWizard has completed all the tasks.'
