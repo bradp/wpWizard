@@ -195,7 +195,7 @@ git commit --allow-empty -q -a -s -m "Removed Hello-Dolly and Hello.php plugins"
 # Install plugins that are listed in the plugins.conf file
 # To add your/modify the plugins that are installed simply
 # Change the plugins file to contain the slug of the plugins you want! 
-for plugin in `cat $dir/conf/plugins.conf`; do
+for plugin in `cat $dir/plugins.conf`; do
 	echo "Installing: $plugin..."
 	mkdir $plugin; cd $plugin
 	if [ -z $USECURL ]; then
@@ -220,7 +220,7 @@ echo "<?php // mu-plugins/load.php" > load.php;
 # Install plugins that are listed in the mu-plugins.conf file
 # To add your/modify the plugins that are installed simply
 # Change the plugins file to contain the slug of the plugins you want! 
-for plugin in `cat $dir/conf/mu-plugins.conf`; do
+for plugin in `cat $dir/mu-plugins.conf`; do
 	echo "Installing: $plugin..."
 	mkdir $plugin; cd $plugin
 	if [ -z $USECURL ]; then
