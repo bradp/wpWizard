@@ -30,15 +30,23 @@ echo " "
 
 USECURL=$(command -v wget);
 
+if [ ! $1 ]; then
+	read -p "What directory would you like to create to contain the site? (leaving this blank will install in current directory) " foldername
+else
+	foldername=$1
+fi
+
+
 # create the html for site-root (to mimic MT, possibly look at allowing other structures)
 # if html dir exists, exit - let's not break anything!
-if [ -d "html" ]; then
-	echo "Oops, looks like you already have an html directory here! To protect your files, wpbuildr will now quit. If you meant to run it here, just rename/remove your existing html folder, and it will run."  	
+if [ -d "$foldername" ]; then
+	echo "Oops, looks like you already have a directory with that name here! To protect your files, wpwizard will now quit. If you meant to run it here, just rename/remove your existing html folder, and it will run."  	
 	echo "exiting..."  	
 	exit
 fi
 
 # Set path of script for our library files
+#dir=`dirname $0`
 dir=`dirname $0`
 
 # Title the project
@@ -46,10 +54,10 @@ dir=`dirname $0`
 # DB Name
 # theme name
 # table prefixes
-if [ ! $1 ]; then
+if [ ! $2 ]; then
 	read -p "Give your project a name (this will be used in database creation and theme folder creation): " project
 else
-	project=$1
+	project=$2
 fi
 
 # See if there's a config file, if not offer to create one based on the options the 
@@ -70,13 +78,19 @@ fi
 # fi
 
 # Build our theme from a framework? 
-if [ ! $2 ]; then
+if [ ! $3 ]; then
 	echo "What theme framework would you like to use?"
 	read -p "Options: [bones, bootstrap, blueox, html5, required, roots, _s, startbox, starkers, skeleton, talon, thematic, prometheus, custom, none]: " framework
 fi
 
 # Create html directory (todo: customizable structure)
-mkdir html; cd html
+if [ -z $foldername ]; then
+	echo "Installing into current directory."
+else
+	echo "Installing into $foldername directory."
+	mkdir $foldername
+	cd $foldername
+fi
 
 # Init git repo and do an empty initial commit (for rebasing, thanks @evansolomon)
 git init -q
@@ -87,7 +101,7 @@ echo "Downloading WordPress for you."
 echo ''
 
 # set .gitignore to ignore wp-config.local so we can set different database variables for development vs production
-cat "$dir/lib/.gitignore" > .gitignore
+echo "wp-config.local.php" > .gitignore
 
 # download wordpress, extract and delete original tar
 if [ -z $USECURL ]; then
