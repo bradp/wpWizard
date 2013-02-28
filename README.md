@@ -46,9 +46,9 @@ Via the command line, navigate to your desired placement of your new WordPress i
 
 `wpwizard` optionally accepts one or two arguments on the command line, which is the intended name of your project. This argument is used to create the database name, theme folder and the table prefix. The second is the name of the framework. 
 
-Example usage: `$ wpwizard mywwpinstall` would create a database and theme folder named 'mywpinstall'
+Example usage: `$ wpwizard` . All options will be asked when running.
 
-Advanced usage: You can feed the framework name in as well so `$ wpwizard mywwpinstall skeleton` would create a database and theme folder named 'mywpinstall', using Skeleton as a framework.
+Advanced usage: You can feed the framework name in as well so `$ wpwizard www mywwpinstall skeleton` would create a database and theme folder named 'mywpinstall', using Skeleton as a framework in the `www` directory.
 
 Enjoy your new WordPress install!
 
