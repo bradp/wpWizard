@@ -40,9 +40,18 @@ fi
 # create the html for site-root (to mimic MT, possibly look at allowing other structures)
 # if html dir exists, exit - let's not break anything!
 if [ -d "$foldername" ]; then
-	echo "Oops, looks like you already have a directory with that name here! To protect your files, wpwizard will now quit. If you meant to run it here, just rename/remove your existing html folder, and it will run."  	
-	echo "exiting..."  	
-	exit
+	echo "Oops, looks like you already have a directory with that name here."
+	read -p "Do you want to overwrite it? (y/n)" -n 1 -r
+	echo ""
+	if [[ $REPLY =~ ^[Yy]$ ]]
+	then
+	    mv $foldername "$foldername"_old
+	    echo "wpWizard has renamed your existing folder to '$foldername'_old for safe keeping."
+	else
+		echo "To protect your files, wpwizard will now quit. If you meant to run it here, just rename/remove your existing folder, and it will run."  	
+		echo "exiting..."  	
+		exit
+	fi
 fi
 
 # Set path of script for our library files
@@ -83,7 +92,7 @@ if [ ! $3 ]; then
 	read -p "Options: [bones, bootstrap, blueox, html5, required, roots, _s, startbox, starkers, skeleton, talon, thematic, prometheus, custom, none]: " framework
 fi
 
-# Create html directory (todo: customizable structure)
+# Create html directory
 if [ -z $foldername ]; then
 	echo "Installing into current directory."
 else
