@@ -428,6 +428,31 @@ echo ''
 # create local database
 /Applications/MAMP/Library/bin/mysql -uroot -proot -e "CREATE DATABASE $project"
 
+
+#CURRENTDIR=`pwd`
+########
+#read -p "Do you want wpwizard to add this to your MAMP Pro vhosts file? (y/n)" -n 1 -r
+#	echo ""
+#	if [[ $REPLY =~ ^[Yy]$ ]]
+#	then
+#
+#		read -p "What do you want to name the host for MAMP Pro? (example: $project.dev)" hostsname
+#		if [ -z $hostsname ]; then
+#			hostsname=$project.dev
+#		fi
+#
+#		#TODO: http://stackoverflow.com/questions/12359199/automatic-virtual-hosts-with-mamp-pro
+#
+#		#echo "Please authenticate yourself so wpwizard can add to httpd.conf"
+#
+#		#alright, let's figure this out
+#		echo "$VHOST" | sudo tee -a /Users/bradparbs/Library/Application\ Support/appsolute/MAMP\ PRO/httpd.confecho ''
+#		echo ''
+#		echo 'Added to MAMP Pro vhosts file'
+#		echo ''
+#	fi
+########
+
 echo ''
 echo 'Database has been created'
 echo ''
