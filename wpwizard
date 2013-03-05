@@ -17,42 +17,43 @@
 
 clear
 echo ""
-echo "	   Welcome to wpWizard!                 		"
-echo "	               __    __ _                  _    "
-echo "	__      ___ __/ / /\ \ (_)______ _ _ __ __| |   "
-echo "	\ \ /\ / / '_ \ \/  \/ / |_  / _| | '__/ _| |   "
-echo "	 \ V  V /| |_) \  /\  /| |/ / (_| | | | (_| |   "
-echo "	  \_/\_/ | .__/ \/  \/ |_/___\__,_|_|  \__,_|   "
-echo "	         |_|                                    "
+echo -e "\033[34m      Welcome to wpWizard!                         "
+echo "                 __    __ _                  _    "
+echo "  __      ___ __/ / /\ \ (_)______ _ _ __ __| |   "
+echo "  \ \ /\ / / '_ \ \/  \/ / |_  / _| | '__/ _| |   "
+echo "   \ V  V /| |_) \  /\  /| |/ / (_| | | | (_| |   "
+echo "    \_/\_/ | .__/ \/  \/ |_/___\__,_|_|  \__,_|   "
+echo "           |_|                                    "
 echo '                                                  '
-echo "     Forked from Aaron Holbrook's wpbuildr!		"
+echo "     Forked from Aaron Holbrook's wpbuildr!       "
 echo '--------------------------------------------------'
-echo " "
+echo -e "\033[0m "
 
 USECURL=$(command -v wget);
 
 if [ ! $1 ]; then
-	read -p "What directory would you like to create to contain the site? (leaving this blank will install in current directory) " foldername
+    read -p "What directory would you like to create to contain the site? (leaving this blank will install in current directory) " foldername
 else
-	foldername=$1
+    foldername=$1
 fi
 
 
 # create the html for site-root (to mimic MT, possibly look at allowing other structures)
 # if html dir exists, exit - let's not break anything!
 if [ -d "$foldername" ]; then
-	echo "Oops, looks like you already have a directory with that name here."
-	read -p "Do you want to overwrite it? (y/n)" -n 1 -r
-	echo ""
-	if [[ $REPLY =~ ^[Yy]$ ]]
-	then
-	    mv $foldername "$foldername"_old
-	    echo "wpWizard has renamed your existing folder to '$foldername'_old for safe keeping."
-	else
-		echo "To protect your files, wpwizard will now quit. If you meant to run it here, just rename/remove your existing folder, and it will run."  	
-		echo "exiting..."  	
-		exit
-	fi
+    echo "Oops, looks like you already have a directory with that name here."
+    read -p "Do you want to overwrite it? (y/n)" -n 1 -r
+    echo ""
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        mv $foldername "$foldername"_old
+        echo "wpWizard has renamed your existing folder to '$foldername'_old for safe keeping."
+    else
+        echo -e "\033[31mTo protect your files, wpwizard will now quit. If you meant to run it here, just rename/remove your existing folder, and it will run."
+        echo -e "\033[0m"
+        echo "exiting..."
+        exit
+    fi
 fi
 
 # Set path of script for our library files
@@ -65,41 +66,41 @@ dir=`dirname $0`
 # theme name
 # table prefixes
 if [ ! $2 ]; then
-	read -p "Give your project a name (this will be used in database creation and theme folder creation): " project
+    read -p "Give your project a name (this will be used in database creation and theme folder creation): " project
 else
-	project=$2
+    project=$2
 fi
 
 # See if there's a config file, if not offer to create one based on the options the 
 # user chooses during the setup
 # if [ ! -e "$dir/conf/config.conf" ]; then
-# 	read -p 'Would you like to save your config for next time? [Y/n]' response
-# 	if [[ $response =~ ^([nN][oO]|[nN])$ ]]
-# 		then
-# 				config="NO"
-# 		else
-# 		    config='YES'
-# 		    declare -a config_values
-# 		    touch $dir/config.conf
-# 	fi
-# 	# Cool there's already a config file, so let's use those defaults!
-# 	else
-# 		echo "Detected a config file, using those defaults."
+#   read -p 'Would you like to save your config for next time? [Y/n]' response
+#   if [[ $response =~ ^([nN][oO]|[nN])$ ]]
+#       then
+#               config="NO"
+#       else
+#           config='YES'
+#           declare -a config_values
+#           touch $dir/config.conf
+#   fi
+#   # Cool there's already a config file, so let's use those defaults!
+#   else
+#       echo "Detected a config file, using those defaults."
 # fi
 
 # Build our theme from a framework? 
 if [ ! $3 ]; then
-	echo "What theme framework would you like to use?"
-	read -p "Options: [bones, bootstrap, blueox, html5, required, roots, _s, startbox, starkers, skeleton, talon, thematic, prometheus, custom, none]: " framework
+    echo "What theme framework would you like to use?"
+    read -p "Options: [bones, bootstrap, blueox, html5, required, roots, _s, startbox, starkers, skeleton, talon, thematic, prometheus, custom, none]: " framework
 fi
 
 # Create html directory
 if [ -z $foldername ]; then
-	echo "Installing into current directory."
+    echo "Installing into current directory."
 else
-	echo "Installing into $foldername directory."
-	mkdir $foldername
-	cd $foldername
+    echo "Installing into $foldername directory."
+    mkdir $foldername
+    cd $foldername
 fi
 
 # Init git repo and do an empty initial commit (for rebasing, thanks @evansolomon)
@@ -115,9 +116,9 @@ echo "wp-config.local.php" > .gitignore
 
 # download wordpress, extract and delete original tar
 if [ -z $USECURL ]; then
-	curl -H "Accept-Encoding: gzip,deflate" http://wordpress.org/latest.tar.gz > latest.tar.gz
+    curl -H "Accept-Encoding: gzip,deflate" http://wordpress.org/latest.tar.gz > latest.tar.gz
 else
-	wget http://wordpress.org/latest.tar.gz
+    wget http://wordpress.org/latest.tar.gz
 fi
 
 tar --strip-components=1 -zxf latest.tar.gz
@@ -136,66 +137,66 @@ git commit --allow-empty -q -m "Installed WordPress core files."
 
 # Use framework option
 if [ "$framework" == "none" ] || [ "$framework" == "" ]; then
-	framework_repo="none"
+    framework_repo="none"
 elif [ "$framework" == "blueox" ]; then
-	framework_repo="git://github.com/AaronHolbrook/Blue-Ox.git"  
+    framework_repo="git://github.com/AaronHolbrook/Blue-Ox.git"  
 elif [ "$framework" == "_s" ]; then
   framework_repo="git://github.com/Automattic/_s.git"
 elif [ "$framework" == "s" ]; then
   framework_repo="git://github.com/Automattic/_s.git"
 elif [ "$framework" == "starkers" ]; then
-	framework_repo="git://github.com/viewportindustries/starkers.git"
+    framework_repo="git://github.com/viewportindustries/starkers.git"
 elif [ "$framework" == "bootstrap" ]; then
-	framework_repo="git://github.com/rachelbaker/bootstrapwp-Twitter-Bootstrap-for-WordPress.git"
+    framework_repo="git://github.com/rachelbaker/bootstrapwp-Twitter-Bootstrap-for-WordPress.git"
 elif [ "$framework" == "html5" ]; then
-	framework_repo="git://github.com/murtaugh/HTML5-Reset-Wordpress-Theme.git"  
+    framework_repo="git://github.com/murtaugh/HTML5-Reset-Wordpress-Theme.git"  
 elif [ "$framework" == "startbox" ]; then
-	framework_repo="git://github.com/brichards/StartBox.git"  
+    framework_repo="git://github.com/brichards/StartBox.git"  
 elif [ "$framework" == "bones" ]; then
-	framework_repo="git://github.com/eddiemachado/bones.git"
+    framework_repo="git://github.com/eddiemachado/bones.git"
 elif [ "$framework" == "roots" ]; then
-	framework_repo="git://github.com/retlehs/roots.git"
+    framework_repo="git://github.com/retlehs/roots.git"
 elif [ "$framework" == "reverie" ]; then
-	framework_repo="git://github.com/milohuang/reverie.git"
+    framework_repo="git://github.com/milohuang/reverie.git"
 elif [ "$framework" == "required" ]; then
-	framework_repo="git://github.com/wearerequired/required-foundation.git"
+    framework_repo="git://github.com/wearerequired/required-foundation.git"
 elif [ "$framework" == "thematic" ]; then
-	framework_repo="git://github.com/ThematicTheme/Thematic.git"	
+    framework_repo="git://github.com/ThematicTheme/Thematic.git"    
 elif [ "$framework" == "skeleton" ]; then
-	framework_repo="git://github.com/simplethemes/skeleton_wp.git"			
+    framework_repo="git://github.com/simplethemes/skeleton_wp.git"          
 elif [ "$framework" == "talon" ]; then
-	framework_repo="git@github.com:dustyf/wp-talon.git"	
+    framework_repo="git@github.com:dustyf/wp-talon.git" 
 elif [ "$framework" == "prometheus" ]; then
-	framework_repo="git@github.com:noeltock/prometheus.git"	
+    framework_repo="git@github.com:noeltock/prometheus.git" 
 elif [ "$framework" == "custom" ]; then
   read -p "Location for custom theme: [can be git:// protocol or just a local git repository]: " framework_repo
 fi
 
 
-echo ''	
+echo '' 
 echo "Downloading theme for you."
 echo ''
 
 
 # if the user did not choose none, then add the theme to our themes folder
 if [ "$framework_repo" != "none" ]; then
-	# clone the repo into our new base directory
-	git clone -q "$framework_repo" "wp-content/themes/"$project
+    # clone the repo into our new base directory
+    git clone -q "$framework_repo" "wp-content/themes/"$project
 
-	# delete the git repo that the theme came with
-	rm -rf wp-content/themes/$project/.git
+    # delete the git repo that the theme came with
+    rm -rf wp-content/themes/$project/.git
 
-	git add .
-	git commit --allow-empty -q -a -s -m "Installed theme framework"
+    git add .
+    git commit --allow-empty -q -a -s -m "Installed theme framework"
 
 
-	# let's clear out some of the pre-packaged themes
-	rm -rf wp-content/themes/twentyten
-	rm -rf wp-content/themes/twentyeleven
-	rm -rf wp-content/themes/twentytwelve
+    # let's clear out some of the pre-packaged themes
+    rm -rf wp-content/themes/twentyten
+    rm -rf wp-content/themes/twentyeleven
+    rm -rf wp-content/themes/twentytwelve
 
-	git add .
-	git commit --allow-empty -q -a -s -m "Removed default themes"
+    git add .
+    git commit --allow-empty -q -a -s -m "Removed default themes"
 
 fi
 
@@ -220,19 +221,19 @@ git commit --allow-empty -q -a -s -m "Removed Hello-Dolly and Hello.php plugins"
 # To add your/modify the plugins that are installed simply
 # Change the plugins file to contain the slug of the plugins you want! 
 for plugin in `cat $dir/plugins.conf`; do
-	echo "Installing: $plugin..."
-	mkdir $plugin; cd $plugin
-	if [ -z $USECURL ]; then
-		curl -H "Accept-Encoding: gzip,deflate" http://downloads.wordpress.org/plugin/$plugin.zip > $plugin.zip
-	else
-		wget -q http://downloads.wordpress.org/plugin/$plugin.zip
-	fi
-	
-	tar --strip-components=1 -zxf $plugin.zip
-	rm $plugin.zip
-	git add .
-	git commit --allow-empty -q -a -s -m "Installed $plugin"
-	cd ..
+    echo "Installing: $plugin..."
+    mkdir $plugin; cd $plugin
+    if [ -z $USECURL ]; then
+        curl -H "Accept-Encoding: gzip,deflate" http://downloads.wordpress.org/plugin/$plugin.zip > $plugin.zip
+    else
+        wget -q http://downloads.wordpress.org/plugin/$plugin.zip
+    fi
+    
+    tar --strip-components=1 -zxf $plugin.zip
+    rm $plugin.zip
+    git add .
+    git commit --allow-empty -q -a -s -m "Installed $plugin"
+    cd ..
 done
 
 # Let's add some mu-plugins! props @aaronjholbrook
@@ -245,22 +246,22 @@ echo "<?php // mu-plugins/load.php" > load.php;
 # To add your/modify the plugins that are installed simply
 # Change the plugins file to contain the slug of the plugins you want! 
 for plugin in `cat $dir/mu-plugins.conf`; do
-	echo "Installing: $plugin..."
-	mkdir $plugin; cd $plugin
-	if [ -z $USECURL ]; then
-		curl -H "Accept-Encoding: gzip,deflate" http://downloads.wordpress.org/plugin/$plugin.zip > $plugin.zip
-	else
-		wget -q http://downloads.wordpress.org/plugin/$plugin.zip
-	fi
-	tar --strip-components=1 -zxf $plugin.zip
-	rm $plugin.zip
+    echo "Installing: $plugin..."
+    mkdir $plugin; cd $plugin
+    if [ -z $USECURL ]; then
+        curl -H "Accept-Encoding: gzip,deflate" http://downloads.wordpress.org/plugin/$plugin.zip > $plugin.zip
+    else
+        wget -q http://downloads.wordpress.org/plugin/$plugin.zip
+    fi
+    tar --strip-components=1 -zxf $plugin.zip
+    rm $plugin.zip
 
-	# Create a loader for the plugin (mu-plugins does not look in subdirectories)
-	cd ..
-	echo "require WPMU_PLUGIN_DIR . '/$plugin/$plugin.php';" >> load.php
+    # Create a loader for the plugin (mu-plugins does not look in subdirectories)
+    cd ..
+    echo "require WPMU_PLUGIN_DIR . '/$plugin/$plugin.php';" >> load.php
 
-	git add .
-	git commit --allow-empty -q -a -s -m "Installed $plugin"
+    git add .
+    git commit --allow-empty -q -a -s -m "Installed $plugin"
 done
 
 # cool, plugins are installed, let's commit!
@@ -297,47 +298,47 @@ if ( file_exists( dirname( __FILE__ ) . '/wp-config.local.php' ) ) {
 } 
 else {
 
-	// ** MySQL settings - You can get this info from your web host ** //
-	/** The name of the database for WordPress */
-	define('DB_NAME', '');
+    // ** MySQL settings - You can get this info from your web host ** //
+    /** The name of the database for WordPress */
+    define('DB_NAME', '');
 
-	/** MySQL database username */
-	define('DB_USER', '');
+    /** MySQL database username */
+    define('DB_USER', '');
 
-	/** MySQL database password */
-	define('DB_PASSWORD', '');
+    /** MySQL database password */
+    define('DB_PASSWORD', '');
 
-	/** MySQL hostname */
-	define('DB_HOST', '');
-	
-	define('WP_CACHE', true);
-
-
-	/**
-	 * For developers: WordPress debugging mode.
-	 *
-	 * Change this to true to enable the display of notices during development.
-	 * It is strongly recommended that plugin and theme developers use WP_DEBUG
-	 * in their development environments.
-	 */
-	define('WP_DEBUG', false);
-
-	define('SAVEQUERIES', true);
-
-	//Disallow edition of files throught WP editor
-	define('DISALLOW_FILE_EDIT', true); 
-
-	//Disallow install of upgrades
-	define('DISALLOW_FILE_MODS',true); 
+    /** MySQL hostname */
+    define('DB_HOST', '');
+    
+    define('WP_CACHE', true);
 
 
-	/**
-	 * WordPress Database Table prefix.
-	 *
-	 * You can have multiple installations in one database if you give each a unique
-	 * prefix. Only numbers, letters, and underscores please!
-	 */
-	\$table_prefix  = 'wp_"$project"_'; 
+    /**
+     * For developers: WordPress debugging mode.
+     *
+     * Change this to true to enable the display of notices during development.
+     * It is strongly recommended that plugin and theme developers use WP_DEBUG
+     * in their development environments.
+     */
+    define('WP_DEBUG', false);
+
+    define('SAVEQUERIES', true);
+
+    //Disallow edition of files throught WP editor
+    define('DISALLOW_FILE_EDIT', true); 
+
+    //Disallow install of upgrades
+    define('DISALLOW_FILE_MODS',true); 
+
+
+    /**
+     * WordPress Database Table prefix.
+     *
+     * You can have multiple installations in one database if you give each a unique
+     * prefix. Only numbers, letters, and underscores please!
+     */
+    \$table_prefix  = 'wp_"$project"_'; 
 
 }
 
@@ -380,7 +381,7 @@ define('WPLANG', '');
 
 /** Absolute path to the WordPress directory. */
 if ( !defined('ABSPATH') )
-	define('ABSPATH', dirname(__FILE__) . '/');
+    define('ABSPATH', dirname(__FILE__) . '/');
 
 /** Sets up WordPress vars and included files. */
 require_once(ABSPATH . 'wp-settings.php');" >> wp-config.php
@@ -432,33 +433,33 @@ echo ''
 #CURRENTDIR=`pwd`
 ########
 #read -p "Do you want wpwizard to add this to your MAMP Pro vhosts file? (y/n)" -n 1 -r
-#	echo ""
-#	if [[ $REPLY =~ ^[Yy]$ ]]
-#	then
+#   echo ""
+#   if [[ $REPLY =~ ^[Yy]$ ]]
+#   then
 #
-#		read -p "What do you want to name the host for MAMP Pro? (example: $project.dev)" hostsname
-#		if [ -z $hostsname ]; then
-#			hostsname=$project.dev
-#		fi
+#       read -p "What do you want to name the host for MAMP Pro? (example: $project.dev)" hostsname
+#       if [ -z $hostsname ]; then
+#           hostsname=$project.dev
+#       fi
 #
-#		#TODO: http://stackoverflow.com/questions/12359199/automatic-virtual-hosts-with-mamp-pro
+#       #TODO: http://stackoverflow.com/questions/12359199/automatic-virtual-hosts-with-mamp-pro
 #
-#		#echo "Please authenticate yourself so wpwizard can add to httpd.conf"
+#       #echo "Please authenticate yourself so wpwizard can add to httpd.conf"
 #
-#		#alright, let's figure this out
-#		echo "$VHOST" | sudo tee -a /Users/bradparbs/Library/Application\ Support/appsolute/MAMP\ PRO/httpd.confecho ''
-#		echo ''
-#		echo 'Added to MAMP Pro vhosts file'
-#		echo ''
-#	fi
+#       #alright, let's figure this out
+#       echo "$VHOST" | sudo tee -a /Users/bradparbs/Library/Application\ Support/appsolute/MAMP\ PRO/httpd.confecho ''
+#       echo ''
+#       echo 'Added to MAMP Pro vhosts file'
+#       echo ''
+#   fi
 ########
 
 echo ''
 echo 'Database has been created'
 echo ''
 
-echo ''
-echo '         ,/   * '
+echo -e "\033[34m   "
+echo -e '         ,/   \033[33m*\033[0m \033[34m '
 echo "      _,'/_   | "
 echo '      `(")' ,'/ '
 echo '   _ _,-H-./ / '
@@ -468,7 +469,7 @@ echo '  __/   H   \__ '
 echo '  \    /|\    / '
 echo "   '--'|||'--'  "
 echo '      ==^== '
-echo ''
-echo '	wpWizard has completed all the tasks.'
+echo -e "\033[0m "
+echo '  wpWizard has completed all the tasks.'
 echo '------------------------------------------------------------------------'
 echo ''
