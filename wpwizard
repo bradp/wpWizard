@@ -144,6 +144,10 @@ elif [ "$framework" == "_s" ]; then
   framework_repo="git://github.com/Automattic/_s.git"
 elif [ "$framework" == "s" ]; then
   framework_repo="git://github.com/Automattic/_s.git"
+elif [ "$framework" == "hooks" ]; then
+  framework_repo="git@github.com:bradp/hook_s.git"
+elif [ "$framework" == "hook_s" ]; then
+  framework_repo="git@github.com:bradp/hook_s.git"
 elif [ "$framework" == "starkers" ]; then
     framework_repo="git://github.com/viewportindustries/starkers.git"
 elif [ "$framework" == "bootstrap" ]; then
