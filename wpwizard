@@ -288,6 +288,9 @@ echo ''
 echo "Plugins installed, and I've done a commit."
 echo ''
 
+project=${project/-/_} 
+
+
 echo "<?php
 /**
  * The base configurations of the WordPress.
