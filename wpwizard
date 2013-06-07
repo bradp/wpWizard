@@ -199,7 +199,7 @@ if [ "$framework_repo" != "none" ]; then
     rm -rf wp-content/themes/$project/.git
 
     git add .
-    git commit --allow-empty -q -a -s -m "Installed theme framework"
+    git commit --allow-empty -q -a -s -m "Installed theme framework."
 
 
     # let's clear out some of the pre-packaged themes
