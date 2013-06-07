@@ -122,9 +122,9 @@ else
 fi
 
 tar --strip-components=1 -zxf latest.tar.gz
-rm latest.tar.gz
-rm license.txt
-rm readme.html
+git rm latest.tar.gz
+git rm license.txt
+git rm readme.html
 
 echo ''
 echo 'WordPress had been downloaded.'
@@ -196,16 +196,16 @@ if [ "$framework_repo" != "none" ]; then
     git clone -q "$framework_repo" "wp-content/themes/"$project
 
     # delete the git repo that the theme came with
-    rm -rf wp-content/themes/$project/.git
+    git rm -rf wp-content/themes/$project/.git
 
     git add .
     git commit --allow-empty -q -a -s -m "Installed theme framework."
 
 
     # let's clear out some of the pre-packaged themes
-    rm -rf wp-content/themes/twentyten
-    rm -rf wp-content/themes/twentyeleven
-    rm -rf wp-content/themes/twentytwelve
+    git rm -rf wp-content/themes/twentyten
+    git rm -rf wp-content/themes/twentyeleven
+    git rm -rf wp-content/themes/twentytwelve
 
     git add .
     git commit --allow-empty -q -a -s -m "Removed default themes"
@@ -223,11 +223,11 @@ git commit --allow-empty -q -m "Theme framework installed!"
 
 # Clean out packaged plugins (akismet & hello dolly)
 cd wp-content/plugins
-rm -rf akismet
-rm hello.php
+git rm akismet/*
+git rm hello.php
 
 git add .
-git commit --allow-empty -q -a -s -m "Removed Hello-Dolly and Hello.php plugins"
+git commit --allow-empty -q -a -s -m "Removed Hello-Dolly and akismet plugins"
 
 # Install plugins that are listed in the plugins.conf file
 # To add your/modify the plugins that are installed simply
@@ -242,7 +242,7 @@ for plugin in `cat $dir/plugins.conf`; do
     fi
     
     tar --strip-components=1 -zxf $plugin.zip
-    rm $plugin.zip
+    git rm $plugin.zip
     git add .
     git commit --allow-empty -q -a -s -m "Installed $plugin"
     cd ..
@@ -266,7 +266,7 @@ for plugin in `cat $dir/mu-plugins.conf`; do
         wget -q http://downloads.wordpress.org/plugin/$plugin.zip
     fi
     tar --strip-components=1 -zxf $plugin.zip
-    rm $plugin.zip
+    git rm $plugin.zip
 
     # Create a loader for the plugin (mu-plugins does not look in subdirectories)
     cd ..
@@ -402,7 +402,7 @@ if ( !defined('ABSPATH') )
 require_once(ABSPATH . 'wp-settings.php');" >> wp-config.php
 
 # All done with wp-config.php so let's remove that wp-config-sample.php file
-rm wp-config-sample.php
+git rm wp-config-sample.php
 git add .
 git commit -q -a -s -m "Removed Sample WP-Config file"
 
