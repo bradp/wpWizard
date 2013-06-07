@@ -415,11 +415,10 @@ define('DB_HOST', 'localhost');
 
 // Open your eyes!
 define('WP_DEBUG', true);
-
-// Save queries
+define('WP_DEBUG_LOG', true);
+define('WP_DEBUG_DISPLAY', true);
+define('SCRIPT_DEBUG', true);
 define('SAVEQUERIES', true);
-
-
 
 \$table_prefix  = 'wp_"$project"_'; 
 ?>" > wp-config.local.php
