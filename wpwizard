@@ -173,11 +173,13 @@ elif [ "$framework" == "talon" ]; then
 elif [ "$framework" == "prometheus" ]; then
     framework_repo="git@github.com:noeltock/prometheus.git" 
 elif [ "$framework" == "wolf" ]; then
-    framework_repo="git@github.com:snowdaygroup/wolf.git"
+    framework_repo="git@github.com:bradp/Wolf.git"
 elif [ "$framework" == "WOLF" ]; then
-    framework_repo="git@github.com:snowdaygroup/wolf.git"
+    framework_repo="git@github.com:bradp/Wolf.git"
 elif [ "$framework" == "w" ]; then
-    framework_repo="git@github.com:snowdaygroup/wolf.git"
+    framework_repo="git@github.com:bradp/Wolf.git"
+elif [ "$framework" == "Wolf" ]; then
+    framework_repo="git@github.com:bradp/Wolf.git"
 elif [ "$framework" == "custom" ]; then
   read -p "Location for custom theme: [can be git:// protocol or just a local git repository]: " framework_repo
 fi
