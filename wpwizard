@@ -127,7 +127,7 @@ rm license.txt
 rm readme.html
 
 echo ''
-echo 'WordPress had been downloaded'
+echo 'WordPress had been downloaded.'
 echo ''
 
 # We succesfully added WordPress, so let's commit!
