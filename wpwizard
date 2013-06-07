@@ -111,8 +111,9 @@ echo ''
 echo "Downloading WordPress for you."
 echo ''
 
-# set .gitignore to ignore wp-config.local so we can set different database variables for development vs production
-echo "wp-config.local.php" > .gitignore
+# set .gitignore to ignore wp-config.local and a ton of other stuff so we can set different database variables for development vs production
+
+echo $'wp-config.local.php \nsass-cache/ \n*.zip \nwp-content/advanced-cache.php \nwp-content/wp-cache-config.php \nwp-content/cache/* \nwp-content/backups/ \nwp-content/blogs.dir/ \nwp-content/upgrade/*' > .gitignore
 
 # download wordpress, extract and delete original tar
 if [ -z $USECURL ]; then
