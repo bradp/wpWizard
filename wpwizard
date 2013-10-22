@@ -208,7 +208,7 @@ if [ "$framework_repo" != "none" ]; then
     rm -rf wp-content/themes/twentyten
     rm -rf wp-content/themes/twentyeleven
     rm -rf wp-content/themes/twentytwelve
-    rm -rf wp-content/themes/twentlythirteen
+    rm -rf wp-content/themes/twentythirteen
 
     git add .
     git commit --allow-empty -q -a -s -m "Removed default themes"
